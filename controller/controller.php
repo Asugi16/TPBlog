@@ -5,34 +5,34 @@ require_once('model/CommentManager.php');
 require_once('model/ConnexionManager.php');
 require_once('model/InscriptionManager.php');
 
-function listBillets()
+function listPosts()
 {
-    $billetManager = new BilletManager();
-    $billets = $billetManager->getBillets(); 
+    $postManager = new BilletManager();
+    $posts = $postManager->getPosts(); 
     require('view/listPostView.php');
 }
 
-function billet()
+function post()
 {
-    $billetManager = new BilletManager();
+    $postManager = new PostManager();
     $commentManager = new CommentManager();
 
-    $billet = $billetManager->getBillet($_GET['id']);
+    $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager-> getComments($_GET['id']);
 
     require('view/postView.php');
 }
 
-function addComment($billetId, $auteur, $comment)
+function addComment($postId, $author, $comment)
 {
     $commentManager = new CommentManager();
-    $affectedLines = $commentManager->billetComment($billetId, $auteur, $comment);
+    $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
     if ($affectedLines === false) {
        throw new Exception('Impossible d\'ajouter le commentaire !');
     }
     else {
-        header('Location: /index.php?action=billet&id=' . $billetId);
+        header('Location: /index.php?action=billet&id=' . $postId);
     }
 }
 
@@ -88,7 +88,7 @@ function inscription()
                             $pseudo = $inscriptionManager-> testPseudo($pseudo);
                            
                             if ($pseudo == $pseudo) {
-                                $insertmembre = $inscriptionManager-> createMember($pseudo, $pass, $mail);
+                                $insertmember = $inscriptionManager-> createMember($pseudo, $pass, $mail);
                                
                                 if ($pass == $passverif) {
                                     
@@ -120,14 +120,14 @@ require('view/inscriptionView.php');
 }
 
 
-function updateComment($billetId, $auteur, $comment)
+function updateComment($postId, $author, $comment)
 {
     $commentManager = new CommentManager();
-    $affectedComment = $commentManager->changeComment($billetId, $auteur, $comment);
+    $affectedComment = $commentManager->changeComment($postId, $author, $comment);
     if ($affectedComment === false) {
         throw new Exception('Impossible de modifier le commentaire !');
     }
     else {
-        header('Location: TPblog/index.php?action=billett&id='. $billetId);
+        header('Location: TPblog/index.php?action=billett&id='. $postId);
     }
 }

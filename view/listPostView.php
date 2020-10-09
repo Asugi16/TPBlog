@@ -3,29 +3,29 @@ $titre = 'Mon blog';
 ob_start(); 
 ?>
   <div align="center">
-    <h1>Bienvenue sur le blog de Manon </h1> <br />
+    <h1>Bienvenue sur le blog de Lulu </h1> <br />
   </div>
   <h3> Les derniers articles </h3> <br /> <br />
 
 
   <?php
-  while ($donnees = $billets->fetch()) {
+  while ($data = $posts->fetch()) {
   ?>
     <div class="news">
       <h3>
-        <?php echo htmlspecialchars($donnees['titre']); ?>
-        <em>le <?php echo $donnees['date_creation']; ?></em>
+        <?php echo htmlspecialchars($data['titre']); ?>
+        <em>le <?php echo $data['date_creation']; ?></em>
       </h3>
 
       <p>
-        <?php echo nl2br(htmlspecialchars($donnees['contenu'])); ?>
+        <?php echo nl2br(htmlspecialchars($data['contenu'])); ?>
         <br />
-        <em><a href="view/postView.php?id=<?= $donnees['id'] ?>">Commentaires</a></em>
+        <em><a href="view/postView.php?id=<?= $data['id'] ?>">Commentaires</a></em>
       </p>
     </div>
   <?php
   }
-  $billets->closeCursor();
+  $posts->closeCursor();
 
   ?>
 

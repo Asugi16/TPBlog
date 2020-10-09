@@ -1,6 +1,6 @@
 <?php
 
-class BilletManager
+class PostManager
 {
 
 
@@ -13,14 +13,14 @@ class BilletManager
     }
 
 
-    public function getBillet($billetId)
+    public function getBillet($postId)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation  FROM billets WHERE id = ?');
-        $req->execute(array($billetId));
+        $req->execute(array($postId));
         $billet = $req->fetch();
 
-        return $billet;
+        return $post;
     }
 
     private function dbConnect()
